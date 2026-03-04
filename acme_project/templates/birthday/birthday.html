@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<form method="post">
+  <div class="card col-4">
+    <div class="card-header">
+      Калькулятор дня рождения
+    </div>
+    <div class="card-body">
+      <form>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <!-- Добавляем кнопку отправки данных. -->
+        {% bootstrap_button button_type="submit" content="Отправить" %}
+      </form>
+    </div>
+  </div>
+</form>
+<!-- Присваиваем переменной data объект request.GET -->
+...
+{% with data=form.instance %}
+  {% if form.is_valid %}
+    ID записи в БД: {{ data.id }}
+    <hr>
+    <h2>Привет, {{ data.first_name }} {{ data.last_name }}</h2>
+    {% if birthday_countdown == 0 %}
+      <p>С днём рождения!</p>
+    {% else %}
+      <p>Осталось дней до дня рождения: {{ birthday_countdown }}!</p>
+    {% endif %}
+  {% endif %}
+{% endwith %}
+
+{% endblock %}
