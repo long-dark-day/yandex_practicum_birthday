@@ -1,6 +1,13 @@
-# birthday/utils.py 
 # Импортируем модуль для работы с датами.
 from datetime import date
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+
+class OnlyAuthorMixin(UserPassesTestMixin):
+
+    def test_func(self):
+        object = self.get_object()
+        return object.author == self.request.user
 
 
 def calculate_birthday_countdown(birthday):
